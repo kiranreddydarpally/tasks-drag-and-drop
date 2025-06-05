@@ -1,0 +1,15 @@
+.drop-zone {
+  min-height: 300px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.draged-item {
+  cursor: move;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  background-color: white;
+  padding: 12px;
+}

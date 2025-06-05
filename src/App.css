@@ -1,0 +1,44 @@
+.app {
+  padding: 48px;
+}
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 24px;
+  padding: 12px;
+  align-items: start;
+  background-color: #eee;
+  overflow: auto;
+}
+
+.column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+
+.column-name {
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-weight: 600;
+}
+
+.not-started-color {
+  background-color: #cbcdd1;
+}
+
+.in-progress-color {
+  background-color: #d4c8e6;
+}
+
+.blocked-color {
+  background-color: #edc9af;
+}
+
+.done-color {
+  background-color: #abc4a5;
+}
