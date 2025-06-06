@@ -25,10 +25,26 @@ const App = () => {
     }
   };
 
-  const handleRemoveItem = (index: number) => {
-    const updatedItems = [...droppedItems];
-    updatedItems.splice(index, 1);
+  const handleRemoveItem = (id: number) => {
+    let updatedItems = [...droppedItems];
+    updatedItems = updatedItems.filter((item) => item.id !== id);
     setDroppedItems(updatedItems);
+  };
+
+  const handleAddItem = (editName: string, editDueDate: string, id: number) => {
+    let updatedItems = [...droppedItems];
+    let filteredItems = updatedItems.filter((item) => item.id !== id);
+    let filteredItem = updatedItems.filter((item) => item.id === id);
+
+    const editItem: IdropedItems = {
+      id: filteredItem[0]?.id,
+      name: editName,
+      dueDate: editDueDate,
+      type: filteredItem[0]?.type,
+      subTasks: filteredItem[0]?.subTasks,
+    };
+
+    setDroppedItems([...filteredItems, editItem]);
   };
 
   return (
@@ -46,6 +62,7 @@ const App = () => {
               )}
               handleRemoveItem={handleRemoveItem}
               type="Not started"
+              handleAddItem={handleAddItem}
             />
           </div>
           <div className="column">
@@ -57,6 +74,7 @@ const App = () => {
               )}
               handleRemoveItem={handleRemoveItem}
               type="In progress"
+              handleAddItem={handleAddItem}
             />
           </div>
           <div className="column">
@@ -68,6 +86,7 @@ const App = () => {
               )}
               handleRemoveItem={handleRemoveItem}
               type="Blocked"
+              handleAddItem={handleAddItem}
             />
           </div>
           <div className="column">
@@ -77,6 +96,7 @@ const App = () => {
               droppedItems={droppedItems.filter((item) => item.type === "Done")}
               handleRemoveItem={handleRemoveItem}
               type="Done"
+              handleAddItem={handleAddItem}
             />
           </div>
         </div>

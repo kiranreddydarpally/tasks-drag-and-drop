@@ -2,6 +2,18 @@
   display: flex;
   flex-direction: column;
   align-items: start;
+  gap: 6px;
+}
+
+.task-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cursor {
+  cursor: pointer;
 }
 
 .task-title {

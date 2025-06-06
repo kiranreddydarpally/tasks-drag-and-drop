@@ -1,0 +1,108 @@
+import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import React, { useState } from "react";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+  display: "flex",
+  gap: "12px",
+  flexDirection: "column",
+};
+
+const EditModal = ({
+  open,
+  handleClose,
+  taskName,
+  setOpen,
+  taskDueDate,
+  handleAddItem,
+  id,
+}: {
+  open: boolean;
+  handleClose: () => void;
+  taskName: string;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  taskDueDate: string;
+  handleAddItem: (editName: string, editDueDate: string, id: number) => void;
+  id: number;
+}) => {
+  const [editName, setEditName] = useState(taskName);
+  const [editDueDate, setEditDueDate] = useState(taskDueDate);
+
+  return (
+    <div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <TextField
+            error={editName === ""}
+            onChange={(e) => {
+              setEditName(e.target.value);
+            }}
+            required
+            id={
+              editName === ""
+                ? "outlined-error-helper-text"
+                : "outlined-required"
+            }
+            label={editName === "" ? "Error" : "Required"}
+            defaultValue={editName}
+            value={editName}
+            helperText={editName === "" ? "task name cannot be empty." : ""}
+          />
+
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              value={dayjs(editDueDate)}
+              onChange={(e: any) => {
+                setEditDueDate(dayjs(e).format("MM/DD/YYYY"));
+              }}
+            />
+          </LocalizationProvider>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "12px",
+            }}
+          >
+            <Button
+              disabled={editName === ""}
+              variant="contained"
+              onClick={() => {
+                handleAddItem(editName, editDueDate, id);
+                setOpen(false);
+              }}
+            >
+              Submit
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => {
+                setOpen(false);
+              }}
+            >
+              Cancel
+            </Button>
+          </div>
+        </Box>
+      </Modal>
+    </div>
+  );
+};
+
+export default EditModal;

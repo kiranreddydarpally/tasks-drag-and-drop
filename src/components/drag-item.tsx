@@ -1,9 +1,25 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useDrag } from "react-dnd";
 import { IdropedItems } from "../utils/dropped-items.interface";
 import "./drag-item.css";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import EditModal from "./edit-modal";
 
-const DragItem = ({ item, type }: { item: IdropedItems; type: string }) => {
+const DragItem = ({
+  item,
+  type,
+  handleRemoveItem,
+  id,
+  handleAddItem,
+}: {
+  item: IdropedItems;
+  type: string;
+  handleRemoveItem: (id: number) => void;
+  id: number;
+  handleAddItem: (editName: string, editDueDate: string, id: number) => void;
+}) => {
+  const [open, setOpen] = useState(false);
   const dragRef = useRef<HTMLDivElement>(null);
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -13,11 +29,30 @@ const DragItem = ({ item, type }: { item: IdropedItems; type: string }) => {
       isDragging: monitor.isDragging(),
     }),
   }));
+
   drag(dragRef);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <div ref={dragRef} className="task-item">
-      <div className="task-title">{item.name}</div>
+      <div className="task-header">
+        <div className="task-title">{item.name}</div>
+        <div>
+          <EditIcon
+            className="cursor"
+            onClick={() => {
+              setOpen(true);
+            }}
+          ></EditIcon>
+          <DeleteOutlineIcon
+            className="cursor"
+            onClick={() => handleRemoveItem(id)}
+          ></DeleteOutlineIcon>
+        </div>
+      </div>
       {item.dueDate && (
         <div className="due-date">
           Due{" "}
@@ -33,6 +68,15 @@ const DragItem = ({ item, type }: { item: IdropedItems; type: string }) => {
           })}
         </ul>
       )}
+      <EditModal
+        open={open}
+        handleClose={handleClose}
+        taskName={item.name}
+        setOpen={setOpen}
+        taskDueDate={item.dueDate ?? ""}
+        handleAddItem={handleAddItem}
+        id={id}
+      />
     </div>
   );
 };
