@@ -20,7 +20,8 @@ const DragItem = ({
   handleEditItem: (
     editName: string,
     editDueDate: string,
-    taskId: number
+    taskId: number,
+    subTasks: string[]
   ) => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -82,6 +83,7 @@ const DragItem = ({
         taskDueDate={item.dueDate ?? ""}
         handleEditItem={handleEditItem}
         taskId={taskId}
+        subTasks={item.subTasks}
       />
     </div>
   );

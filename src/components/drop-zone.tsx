@@ -18,7 +18,8 @@ const DropZone = ({
   handleEditItem: (
     editName: string,
     editDueDate: string,
-    taskId: number
+    taskId: number,
+    subTasks: string[]
   ) => void;
 }) => {
   const dropRef = useRef<HTMLDivElement>(null);

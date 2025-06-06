@@ -17,7 +17,7 @@ const App = () => {
         ...prevItems,
         {
           taskId:
-            Math.max(...prevItems.map((item) => item.taskId).filter(Number)) +
+            Math.max(...prevItems.map((item) => item.taskId).filter(Boolean)) +
             1,
           type: item?.type,
           name: item?.items?.name,
@@ -36,7 +36,8 @@ const App = () => {
   const handleEditItem = (
     editName: string,
     editDueDate: string,
-    taskId: number
+    taskId: number,
+    subTasks: string[]
   ) => {
     let updatedItems = [...droppedItems];
     let filteredItems = updatedItems.filter((item) => item.taskId !== taskId);
@@ -47,7 +48,7 @@ const App = () => {
       name: editName,
       dueDate: editDueDate,
       type: filteredItem[0]?.type,
-      subTasks: filteredItem[0]?.subTasks,
+      subTasks: [...subTasks],
     };
     setDroppedItems([editItem, ...filteredItems]);
   };

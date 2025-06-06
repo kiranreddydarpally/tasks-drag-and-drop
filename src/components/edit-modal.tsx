@@ -1,8 +1,9 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
+import { IdropedItems } from "../utils/dropped-items.interface";
 
 const style = {
   position: "absolute",
@@ -27,6 +28,7 @@ const EditModal = ({
   taskDueDate,
   handleEditItem,
   taskId,
+  subTasks,
 }: {
   open: boolean;
   handleClose: () => void;
@@ -36,12 +38,29 @@ const EditModal = ({
   handleEditItem: (
     editName: string,
     editDueDate: string,
-    taskId: number
+    taskId: number,
+    subTasks: string[]
   ) => void;
   taskId: number;
+  subTasks: IdropedItems["subTasks"];
 }) => {
   const [editName, setEditName] = useState(taskName);
   const [editDueDate, setEditDueDate] = useState(taskDueDate);
+  const [editSubTaskName, setEditSubTaskName] = useState<string[]>([
+    ...(subTasks ?? []),
+  ]);
+
+  useEffect(() => {
+    setEditName(taskName);
+  }, [taskName]);
+
+  useEffect(() => {
+    setEditDueDate(taskDueDate);
+  }, [taskDueDate]);
+
+  useEffect(() => {
+    setEditSubTaskName([...(subTasks ?? [])]);
+  }, [subTasks]);
 
   return (
     <div>
@@ -68,7 +87,6 @@ const EditModal = ({
             value={editName}
             helperText={editName === "" ? "task name cannot be empty." : ""}
           />
-
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               value={dayjs(editDueDate)}
@@ -77,6 +95,46 @@ const EditModal = ({
               }}
             />
           </LocalizationProvider>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+            <div>Add subTasks</div>
+            <Button
+              variant="contained"
+              onClick={() => {
+                setEditSubTaskName((prev) => [...prev, ""]);
+              }}
+            >
+              Add
+            </Button>
+          </div>
+          {editSubTaskName.map((item, index) => {
+            return (
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "12px" }}
+              >
+                <TextField
+                  onChange={(e) => {
+                    const currentSubtasks = [...editSubTaskName];
+                    currentSubtasks[index] = e.target.value;
+                    setEditSubTaskName(currentSubtasks);
+                  }}
+                  value={item}
+                />
+                <Button
+                  variant="contained"
+                  onClick={() => {
+                    setEditSubTaskName((prev) => {
+                      const filterSubTasks = prev.filter(
+                        (filteredItem, filteredIndex) => filteredIndex !== index
+                      );
+                      return filterSubTasks;
+                    });
+                  }}
+                >
+                  Remove
+                </Button>
+              </div>
+            );
+          })}
           <div
             style={{
               display: "flex",
@@ -88,7 +146,7 @@ const EditModal = ({
               disabled={editName === ""}
               variant="contained"
               onClick={() => {
-                handleEditItem(editName, editDueDate, taskId);
+                handleEditItem(editName, editDueDate, taskId, editSubTaskName);
                 setOpen(false);
               }}
             >
