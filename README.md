@@ -1,4 +1,6 @@
-# tasks-drag-and-drop
+# fe-minimalist-kanban-board task by kiran
+<img width="960" alt="image" src="https://github.com/user-attachments/assets/d64a3a24-2b76-49c7-8eb1-fec156372b92" />
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
