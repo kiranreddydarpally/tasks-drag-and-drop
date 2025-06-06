@@ -5,6 +5,7 @@ import "./drag-item.css";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditModal from "./edit-modal";
+import { ColumnTypesEnum } from "../utils/column-types.enum";
 
 const DragItem = ({
   item,
@@ -21,7 +22,8 @@ const DragItem = ({
     editName: string,
     editDueDate: string,
     taskId: number,
-    subTasks: string[]
+    subTasks: string[],
+    columnType: ColumnTypesEnum
   ) => void;
 }) => {
   const [open, setOpen] = useState(false);

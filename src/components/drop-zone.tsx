@@ -3,6 +3,7 @@ import { useDrop } from "react-dnd";
 import DragItem from "./drag-item";
 import "./drop-zone.css";
 import { IdropedItems } from "../utils/dropped-items.interface";
+import { ColumnTypesEnum } from "../utils/column-types.enum";
 
 const DropZone = ({
   onDrop,
@@ -19,7 +20,8 @@ const DropZone = ({
     editName: string,
     editDueDate: string,
     taskId: number,
-    subTasks: string[]
+    subTasks: string[],
+    columnType: ColumnTypesEnum
   ) => void;
 }) => {
   const dropRef = useRef<HTMLDivElement>(null);

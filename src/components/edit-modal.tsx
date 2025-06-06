@@ -1,9 +1,20 @@
-import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import React, { useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import { IdropedItems } from "../utils/dropped-items.interface";
+import { ColumnTypesEnum } from "../utils/column-types.enum";
 
 const style = {
   position: "absolute",
@@ -29,6 +40,7 @@ const EditModal = ({
   handleEditItem,
   taskId,
   subTasks,
+  type,
 }: {
   open: boolean;
   handleClose: () => void;
@@ -39,16 +51,23 @@ const EditModal = ({
     editName: string,
     editDueDate: string,
     taskId: number,
-    subTasks: string[]
+    subTasks: string[],
+    columnType: ColumnTypesEnum
   ) => void;
   taskId: number;
   subTasks: IdropedItems["subTasks"];
+  type?: "add";
 }) => {
   const [editName, setEditName] = useState(taskName);
   const [editDueDate, setEditDueDate] = useState(taskDueDate);
   const [editSubTaskName, setEditSubTaskName] = useState<string[]>([
     ...(subTasks ?? []),
   ]);
+  const [columnType, setcolumnType] = useState(ColumnTypesEnum.NOTSTARTED);
+
+  const handleChange = (event: SelectChangeEvent) => {
+    setcolumnType(event.target.value as ColumnTypesEnum);
+  };
 
   useEffect(() => {
     setEditName(taskName);
@@ -71,6 +90,24 @@ const EditModal = ({
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          {type === "add" && (
+            <>
+              <InputLabel id="demo-simple-select-label">
+                Select Column Type
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={columnType}
+                label="Age"
+                onChange={handleChange}
+              >
+                {Object.entries(ColumnTypesEnum).map(([key, value]) => (
+                  <MenuItem value={value}>{value}</MenuItem>
+                ))}
+              </Select>
+            </>
+          )}
           <TextField
             error={editName === ""}
             onChange={(e) => {
@@ -146,7 +183,13 @@ const EditModal = ({
               disabled={editName === ""}
               variant="contained"
               onClick={() => {
-                handleEditItem(editName, editDueDate, taskId, editSubTaskName);
+                handleEditItem(
+                  editName,
+                  editDueDate,
+                  taskId,
+                  editSubTaskName,
+                  columnType
+                );
                 setOpen(false);
               }}
             >

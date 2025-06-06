@@ -6,10 +6,14 @@ import DropZone from "./components/drop-zone";
 import { initialDroppedItems } from "./utils/dropped-items";
 import { IdropedItems } from "./utils/dropped-items.interface";
 import { ColumnTypesEnum } from "./utils/column-types.enum";
+import { Button } from "@mui/material";
+import EditModal from "./components/edit-modal";
+import dayjs from "dayjs";
 
 const App = () => {
   const [droppedItems, setDroppedItems] =
     useState<IdropedItems[]>(initialDroppedItems);
+  const [open, setOpen] = useState<boolean>(false);
 
   const handleDrop = (item: any) => {
     if (item.type !== item?.items?.type) {
@@ -37,20 +41,28 @@ const App = () => {
     editName: string,
     editDueDate: string,
     taskId: number,
-    subTasks: string[]
+    subTasks: string[],
+    columnType: ColumnTypesEnum
   ) => {
     let updatedItems = [...droppedItems];
     let filteredItems = updatedItems.filter((item) => item.taskId !== taskId);
     let filteredItem = updatedItems.filter((item) => item.taskId === taskId);
 
     const editItem: IdropedItems = {
-      taskId: filteredItem[0]?.taskId,
+      taskId:
+        filteredItem[0]?.taskId ??
+        Math.max(...filteredItems.map((item) => item.taskId).filter(Boolean)) +
+          1,
       name: editName,
       dueDate: editDueDate,
-      type: filteredItem[0]?.type,
+      type: filteredItem[0]?.type ?? columnType,
       subTasks: [...subTasks],
     };
     setDroppedItems([editItem, ...filteredItems]);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -58,6 +70,14 @@ const App = () => {
       <DndProvider backend={HTML5Backend}>
         <h1>Personal </h1>
         <p>A board to keep track of personal tasks.</p>
+        <Button
+          variant="contained"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          Add tasks
+        </Button>
         <div className="main-content">
           <div className="column">
             <div className="column-name not-started-color">
@@ -115,6 +135,17 @@ const App = () => {
           </div>
         </div>
       </DndProvider>
+      <EditModal
+        open={open}
+        handleClose={handleClose}
+        taskName="new Task"
+        setOpen={setOpen}
+        taskDueDate={dayjs(new Date()).format("MM/DD/YYYY")}
+        handleEditItem={handleEditItem}
+        taskId={-1}
+        subTasks={[]}
+        type="add"
+      />
     </div>
   );
 };
