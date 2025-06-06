@@ -54,7 +54,6 @@ const DragItem = ({
               setOpen(true);
             }}
           ></EditIcon>
-          {taskId}
           <DeleteOutlineIcon
             className="cursor"
             onClick={() => handleRemoveItem(taskId)}
