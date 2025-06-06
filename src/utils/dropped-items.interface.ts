@@ -1,5 +1,5 @@
 export interface IdropedItems {
-  id: number;
+  taskId: number;
   type: string;
   name: string;
   dueDate?: string; //mm/dd/yyyy

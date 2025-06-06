@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./App.css";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import DragItem from "./components/drag-item";
 import DropZone from "./components/drop-zone";
 import { initialDroppedItems } from "./utils/dropped-items";
 import { IdropedItems } from "./utils/dropped-items.interface";
+import { ColumnTypesEnum } from "./utils/column-types.enum";
 
 const App = () => {
   const [droppedItems, setDroppedItems] =
@@ -25,19 +25,23 @@ const App = () => {
     }
   };
 
-  const handleRemoveItem = (id: number) => {
+  const handleRemoveItem = (taskId: number) => {
     let updatedItems = [...droppedItems];
-    updatedItems = updatedItems.filter((item) => item.id !== id);
+    updatedItems = updatedItems.filter((item) => item.taskId !== taskId);
     setDroppedItems(updatedItems);
   };
 
-  const handleAddItem = (editName: string, editDueDate: string, id: number) => {
+  const handleAddItem = (
+    editName: string,
+    editDueDate: string,
+    taskId: number
+  ) => {
     let updatedItems = [...droppedItems];
-    let filteredItems = updatedItems.filter((item) => item.id !== id);
-    let filteredItem = updatedItems.filter((item) => item.id === id);
+    let filteredItems = updatedItems.filter((item) => item.taskId !== taskId);
+    let filteredItem = updatedItems.filter((item) => item.taskId === taskId);
 
     const editItem: IdropedItems = {
-      id: filteredItem[0]?.id,
+      taskId: filteredItem[0]?.taskId,
       name: editName,
       dueDate: editDueDate,
       type: filteredItem[0]?.type,
@@ -54,48 +58,56 @@ const App = () => {
         <p>A board to keep track of personal tasks.</p>
         <div className="main-content">
           <div className="column">
-            <div className="column-name not-started-color">Not started</div>
+            <div className="column-name not-started-color">
+              {ColumnTypesEnum.NOTSTARTED}
+            </div>
             <DropZone
               onDrop={handleDrop}
               droppedItems={droppedItems.filter(
-                (item) => item.type === "Not started"
+                (item) => item.type === ColumnTypesEnum.NOTSTARTED
               )}
               handleRemoveItem={handleRemoveItem}
-              type="Not started"
+              type={ColumnTypesEnum.NOTSTARTED}
               handleAddItem={handleAddItem}
             />
           </div>
           <div className="column">
-            <div className="column-name in-progress-color">In progress</div>
+            <div className="column-name in-progress-color">
+              {ColumnTypesEnum.INPROGRESS}
+            </div>
             <DropZone
               onDrop={handleDrop}
               droppedItems={droppedItems.filter(
-                (item) => item.type === "In progress"
+                (item) => item.type === ColumnTypesEnum.INPROGRESS
               )}
               handleRemoveItem={handleRemoveItem}
-              type="In progress"
+              type={ColumnTypesEnum.INPROGRESS}
               handleAddItem={handleAddItem}
             />
           </div>
           <div className="column">
-            <div className="column-name blocked-color">Blocked</div>
+            <div className="column-name blocked-color">
+              {ColumnTypesEnum.BLOCKED}
+            </div>
             <DropZone
               onDrop={handleDrop}
               droppedItems={droppedItems.filter(
-                (item) => item.type === "Blocked"
+                (item) => item.type === ColumnTypesEnum.BLOCKED
               )}
               handleRemoveItem={handleRemoveItem}
-              type="Blocked"
+              type={ColumnTypesEnum.BLOCKED}
               handleAddItem={handleAddItem}
             />
           </div>
           <div className="column">
-            <div className="column-name done-color">Done</div>
+            <div className="column-name done-color">{ColumnTypesEnum.DONE}</div>
             <DropZone
               onDrop={handleDrop}
-              droppedItems={droppedItems.filter((item) => item.type === "Done")}
+              droppedItems={droppedItems.filter(
+                (item) => item.type === ColumnTypesEnum.DONE
+              )}
               handleRemoveItem={handleRemoveItem}
-              type="Done"
+              type={ColumnTypesEnum.DONE}
               handleAddItem={handleAddItem}
             />
           </div>

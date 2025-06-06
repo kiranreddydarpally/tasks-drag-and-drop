@@ -1,23 +1,25 @@
+import { ColumnTypesEnum } from "./column-types.enum";
+
 export const initialDroppedItems = [
   {
-    id: 1,
-    type: "Not started",
+    taskId: 1,
+    type: ColumnTypesEnum.NOTSTARTED,
     name: "take Coco to a vet",
     dueDate: "12/4/2021",
   },
   {
-    id: 2,
-    type: "In progress",
+    taskId: 2,
+    type: ColumnTypesEnum.INPROGRESS,
     name: "Taxes",
     subTasks: ["Accountant Contract", "Request work playslips", "Cacel VAT ID"],
   },
   {
-    id: 3,
-    type: "Not started",
+    taskId: 3,
+    type: ColumnTypesEnum.INPROGRESS,
     name: "take Coco to a vet",
     dueDate: "4/11/2021",
   },
 
-  { id: 4, type: "Blocked", name: "123blocked" },
-  { id: 5, type: "Done", name: "123Done" },
+  { taskId: 4, type: ColumnTypesEnum.BLOCKED, name: "123blocked" },
+  { taskId: 5, type: ColumnTypesEnum.DONE, name: "123Done" },
 ];

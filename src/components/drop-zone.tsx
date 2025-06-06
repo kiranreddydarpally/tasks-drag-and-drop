@@ -13,9 +13,9 @@ const DropZone = ({
 }: {
   onDrop: any;
   droppedItems: IdropedItems[];
-  handleRemoveItem: (id: number) => void;
+  handleRemoveItem: (taskId: number) => void;
   type: string;
-  handleAddItem: (editName: string, editDueDate: string, id: number) => void;
+  handleAddItem: (editName: string, editDueDate: string, taskId: number) => void;
 }) => {
   const dropRef = useRef<HTMLDivElement>(null);
 
@@ -39,7 +39,7 @@ const DropZone = ({
             item={item}
             type={type}
             handleRemoveItem={handleRemoveItem}
-            id={item.id}
+            taskId={item.taskId}
             handleAddItem={handleAddItem}
           />
         </div>

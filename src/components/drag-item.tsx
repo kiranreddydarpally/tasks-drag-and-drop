@@ -10,14 +10,18 @@ const DragItem = ({
   item,
   type,
   handleRemoveItem,
-  id,
+  taskId,
   handleAddItem,
 }: {
   item: IdropedItems;
   type: string;
-  handleRemoveItem: (id: number) => void;
-  id: number;
-  handleAddItem: (editName: string, editDueDate: string, id: number) => void;
+  handleRemoveItem: (taskId: number) => void;
+  taskId: number;
+  handleAddItem: (
+    editName: string,
+    editDueDate: string,
+    taskId: number
+  ) => void;
 }) => {
   const [open, setOpen] = useState(false);
   const dragRef = useRef<HTMLDivElement>(null);
@@ -49,7 +53,7 @@ const DragItem = ({
           ></EditIcon>
           <DeleteOutlineIcon
             className="cursor"
-            onClick={() => handleRemoveItem(id)}
+            onClick={() => handleRemoveItem(taskId)}
           ></DeleteOutlineIcon>
         </div>
       </div>
@@ -75,7 +79,7 @@ const DragItem = ({
         setOpen={setOpen}
         taskDueDate={item.dueDate ?? ""}
         handleAddItem={handleAddItem}
-        id={id}
+        taskId={taskId}
       />
     </div>
   );
