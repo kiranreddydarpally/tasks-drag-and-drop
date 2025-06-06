@@ -71,6 +71,7 @@ const App = () => {
         <h1>Personal </h1>
         <p>A board to keep track of personal tasks.</p>
         <Button
+          style={{ marginBottom: "10px" }}
           variant="contained"
           onClick={() => {
             setOpen(true);

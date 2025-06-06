@@ -1,5 +1,5 @@
 .drop-zone {
-  min-height: 300px;
+  min-height: 260px;
   display: flex;
   gap: 10px;
   flex-direction: column;
