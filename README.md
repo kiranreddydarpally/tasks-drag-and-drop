@@ -1,5 +1,6 @@
 # fe-minimalist-kanban-board task by kiran
-<img width="960" alt="image" src="https://github.com/user-attachments/assets/d64a3a24-2b76-49c7-8eb1-fec156372b92" />
+![Screenshot 2025-06-06 234502](https://github.com/user-attachments/assets/f101ee68-7221-45cc-ad24-58c5b42f0460)
+
 
 # Getting Started with Create React App
 
