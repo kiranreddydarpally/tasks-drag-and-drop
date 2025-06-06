@@ -25,7 +25,7 @@ const EditModal = ({
   taskName,
   setOpen,
   taskDueDate,
-  handleAddItem,
+  handleEditItem,
   taskId,
 }: {
   open: boolean;
@@ -33,7 +33,11 @@ const EditModal = ({
   taskName: string;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   taskDueDate: string;
-  handleAddItem: (editName: string, editDueDate: string, taskId: number) => void;
+  handleEditItem: (
+    editName: string,
+    editDueDate: string,
+    taskId: number
+  ) => void;
   taskId: number;
 }) => {
   const [editName, setEditName] = useState(taskName);
@@ -84,7 +88,7 @@ const EditModal = ({
               disabled={editName === ""}
               variant="contained"
               onClick={() => {
-                handleAddItem(editName, editDueDate, taskId);
+                handleEditItem(editName, editDueDate, taskId);
                 setOpen(false);
               }}
             >

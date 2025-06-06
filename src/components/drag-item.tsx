@@ -11,13 +11,13 @@ const DragItem = ({
   type,
   handleRemoveItem,
   taskId,
-  handleAddItem,
+  handleEditItem,
 }: {
   item: IdropedItems;
   type: string;
   handleRemoveItem: (taskId: number) => void;
   taskId: number;
-  handleAddItem: (
+  handleEditItem: (
     editName: string,
     editDueDate: string,
     taskId: number
@@ -51,6 +51,7 @@ const DragItem = ({
               setOpen(true);
             }}
           ></EditIcon>
+          {taskId}
           <DeleteOutlineIcon
             className="cursor"
             onClick={() => handleRemoveItem(taskId)}
@@ -72,13 +73,14 @@ const DragItem = ({
           })}
         </ul>
       )}
+
       <EditModal
         open={open}
         handleClose={handleClose}
         taskName={item.name}
         setOpen={setOpen}
         taskDueDate={item.dueDate ?? ""}
-        handleAddItem={handleAddItem}
+        handleEditItem={handleEditItem}
         taskId={taskId}
       />
     </div>

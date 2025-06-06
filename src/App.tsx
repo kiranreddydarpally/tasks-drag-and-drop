@@ -13,9 +13,12 @@ const App = () => {
 
   const handleDrop = (item: any) => {
     if (item.type !== item?.items?.type) {
-      setDroppedItems((prevItems: any): any => [
+      setDroppedItems((prevItems: IdropedItems[]): any => [
         ...prevItems,
         {
+          taskId:
+            Math.max(...prevItems.map((item) => item.taskId).filter(Number)) +
+            1,
           type: item?.type,
           name: item?.items?.name,
           subTasks: item?.items?.subTasks,
@@ -24,14 +27,13 @@ const App = () => {
       ]);
     }
   };
-
   const handleRemoveItem = (taskId: number) => {
     let updatedItems = [...droppedItems];
     updatedItems = updatedItems.filter((item) => item.taskId !== taskId);
     setDroppedItems(updatedItems);
   };
 
-  const handleAddItem = (
+  const handleEditItem = (
     editName: string,
     editDueDate: string,
     taskId: number
@@ -47,8 +49,7 @@ const App = () => {
       type: filteredItem[0]?.type,
       subTasks: filteredItem[0]?.subTasks,
     };
-
-    setDroppedItems([...filteredItems, editItem]);
+    setDroppedItems([editItem, ...filteredItems]);
   };
 
   return (
@@ -68,7 +69,7 @@ const App = () => {
               )}
               handleRemoveItem={handleRemoveItem}
               type={ColumnTypesEnum.NOTSTARTED}
-              handleAddItem={handleAddItem}
+              handleEditItem={handleEditItem}
             />
           </div>
           <div className="column">
@@ -82,7 +83,7 @@ const App = () => {
               )}
               handleRemoveItem={handleRemoveItem}
               type={ColumnTypesEnum.INPROGRESS}
-              handleAddItem={handleAddItem}
+              handleEditItem={handleEditItem}
             />
           </div>
           <div className="column">
@@ -96,7 +97,7 @@ const App = () => {
               )}
               handleRemoveItem={handleRemoveItem}
               type={ColumnTypesEnum.BLOCKED}
-              handleAddItem={handleAddItem}
+              handleEditItem={handleEditItem}
             />
           </div>
           <div className="column">
@@ -108,7 +109,7 @@ const App = () => {
               )}
               handleRemoveItem={handleRemoveItem}
               type={ColumnTypesEnum.DONE}
-              handleAddItem={handleAddItem}
+              handleEditItem={handleEditItem}
             />
           </div>
         </div>
