@@ -29,6 +29,7 @@ const DragItem = ({
   const [open, setOpen] = useState(false);
   const dragRef = useRef<HTMLDivElement>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "fe-kanban-board",
     item: { ...item, type },

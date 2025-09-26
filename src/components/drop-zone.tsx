@@ -26,6 +26,7 @@ const DropZone = ({
 }) => {
   const dropRef = useRef<HTMLDivElement>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "fe-kanban-board",
     drop: (item: any) => {
